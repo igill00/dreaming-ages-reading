@@ -1,6 +1,6 @@
 /* Dreaming Ages wind-down check. Plain JS, no cookies, no storage, no network calls. */
 (function(){
-  var KIT = 'https://kit-dreaming-ages.kit.com/d09dc2b5c3';
+  var KIT = 'https://kit-dreaming-ages.kit.com/d09dc2b5c3', OF={"r": "Give your racing mind somewhere calm to go", "s": "A steady Monday note for a steadier week", "l": "Quiet stories for light sleepers, once a week", "g": "Keep your good nights coming"};
   var R = window.DA_REF||{}, SB='../sleep-guide/', GB='../sleep-guide/', ST={"r": [6, 8, 10], "s": [1, 2, 5], "l": [7, 3, 10], "g": [1, 2, 5]}; function sup(keys){return (keys||[]).map(function(k){return R[k]?'<sup><a href="'+SB+'#src-'+R[k]+'">'+R[k]+'</a></sup>':'';}).join('');}
   var YT = function(id){return 'https://www.youtube.com/watch?v='+id+'&amp;list=PLOHsZ3iVZVdw';};
   // r = racing mind, s = shifting schedule, l = light sleeper, h = harmony points (0-3, higher is calmer)
@@ -75,7 +75,14 @@
     g:'<circle cx="75" cy="75" r="62" fill="#141d47" stroke="#e3c77d" stroke-opacity=".5"/><circle cx="75" cy="64" r="26" fill="#f1dc9c"/><circle cx="66" cy="58" r="4" fill="#e3c77d" opacity=".5"/><circle cx="83" cy="72" r="3" fill="#e3c77d" opacity=".45"/><path d="M28 106c14-10 26-10 40 0s26 10 40 0 14-6 14-6" fill="none" stroke="#c6cbe2" stroke-width="2.4" stroke-linecap="round" opacity=".7"/><path d="M36 118c12-8 22-8 34 0s22 8 34 0" fill="none" stroke="#c6cbe2" stroke-width="2" stroke-linecap="round" opacity=".45"/>'
   };
   var root=document.getElementById('quiz'); if(!root) return;
-  var ans=[], i=-1;
+  var ans=[], i=-1, bar=null, io=null, closed=false;
+  function stickyOff(){ if(bar) bar.classList.remove('on'); if(io){io.disconnect();io=null;} }
+  function stickyOn(){ if(closed) return; if(!bar){ bar=document.createElement('div'); bar.className='sticky-offer'; bar.setAttribute('role','region'); bar.setAttribute('aria-label','Free bedtime companion');
+      bar.innerHTML='<span><b>Free Bedtime Companion</b> + one quiet email a week</span><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Get it</a><button class="x" type="button" aria-label="Close">\u00d7</button>';
+      bar.querySelector('.x').addEventListener('click',function(){closed=true;stickyOff();}); document.body.appendChild(bar);}
+    var card=document.getElementById('offer'); if(!card) return;
+    io={f:function(){ var r=card.getBoundingClientRect(); bar.classList.toggle('on', r.bottom<0); }, disconnect:function(){ removeEventListener('scroll',io.f); }};
+    addEventListener('scroll',io.f,{passive:true}); io.f(); }
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function top(){
     var pct = i<0?0:(i>=Q.length?100:Math.round((i+1)/Q.length*100));
@@ -91,10 +98,10 @@
     };
     if(sc && !matchMedia('(prefers-reduced-motion: reduce)').matches){sc.classList.add('out'); setTimeout(go,300);} else go();
   }
-  function intro(){ i=-1;
+  function intro(){ i=-1; stickyOff();
     swap('<div class="intro"><div class="q-kicker">Your wind-down check</div><h2>Find your sleep style</h2><p>Eight quick taps, no typing, under two minutes. You\u2019ll get a calm little plan and a story to try tonight.</p><div class="chips"><span class="chip">\u23F1 2 minutes</span><span class="chip">\uD83D\uDD12 Nothing is saved</span><span class="chip">\uD83C\uDF19 Just for you</span></div><button class="btn" type="button" data-start>Begin \u2192</button></div>','h2');
   }
-  function ask(){
+  function ask(){ stickyOff();
     var q=Q[i], h='<div class="q-kicker">'+esc(q.k)+'</div><div class="q-title" role="heading" aria-level="2">'+esc(q.t)+'</div><div class="opts" role="list">';
     q.o.forEach(function(o,n){h+='<button type="button" role="listitem" class="opt'+(ans[i]===n?' sel':'')+'" data-a="'+n+'"><span class="em" aria-hidden="true">'+o[0]+'</span><span>'+esc(o[1])+'</span></button>';});
     swap(h+'</div>');
@@ -111,13 +118,14 @@
       '<div class="meter"><div class="lbl"><span>Evening calm</span><span>'+band+'</span></div><div class="track"><div class="fill" data-w="'+score+'"></div></div></div>'+
       '<div class="sub-h">Three things to try</div><ol class="tips">';
     p.tips.forEach(function(tp,n){var sn=ST[best][n]; h+='<li><span class="n">'+(n+1)+'</span><div><b>'+esc(tp[0])+'</b><span>'+esc(tp[1])+sup(tp[2])+'</span><a class="go" href="'+GB+'#step-'+sn+'">Step '+sn+' in the guide \u2192</a></div></li>';});
-    h+='</ol><div class="sub-h">Stories for tonight</div><div class="eps">';
+    h+='</ol><div class="offer" id="offer"><div class="ok">Free bedtime companion</div><h3>'+esc(OF[best])+'</h3><p>Join the Dreaming Ages list for slow, calm history to fall asleep to.</p><ul><li><b>A free Bedtime Companion PDF</b>, sent right away: a map, a timeline and the people you\u2019ll meet in Byzantium</li><li><b>One quiet email on Mondays</b> with that week\u2019s new sleep stories and their companions</li><li><b>A small history curiosity</b> to read by lamplight</li></ul><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Send me the free companion \u2192</a><p class="fine">Free. One quiet email a week. Unsubscribe with one click. Your quiz answers aren\u2019t sent with your email.</p></div>';
+    h+='<div class="sub-h">Stories for tonight</div><div class="eps">';
     p.eps.forEach(function(e){h+='<a class="ep" href="'+YT(e[0])+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 16 16"><path d="M3 1.5v13l11-6.5z"/></svg></span><span><b>'+esc(e[1])+'</b><small>'+esc(e[2])+'</small></span></a>';});
     h+='</div>';
     if(t.flag) h+='<p class="care">Feeling very sleepy in the day, even after a full night, is worth mentioning to a doctor, especially if someone has noticed loud snoring or pauses in your breathing.'+sup(['nhsosa'])+'</p>';
-    h+='<div class="actions"><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Email me my full plan</a><button class="btn ghost" type="button" data-again>Take it again</button></div>'+
+    h+='<div class="actions"><button class="btn ghost" type="button" data-again>Take it again</button></div>'+
       '<p class="fine">This is a friendly self-check, not a medical test or diagnosis, and it isn\u2019t medical advice. Your answers stay on this page and aren\u2019t saved or sent anywhere. If poor sleep has lasted more than about three months, or is affecting your days, please talk to a doctor.'+sup(['nhsins'])+' Loud snoring, gasping or choking at night can be a sign of sleep apnoea, so it\u2019s worth getting checked.'+sup(['nhsosa'])+' <a href="../sleep-guide/#help">More help</a>.</p></div>';
-    i=Q.length; swap(h,'h2');
+    i=Q.length; swap(h,'h2'); setTimeout(stickyOn,900);
   }
   root.addEventListener('click',function(e){
     var b=e.target.closest('button'); if(!b) return;
