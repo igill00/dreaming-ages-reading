@@ -36,33 +36,83 @@ a{color:#f0e3b4;text-underline-offset:3px}
 .ep:hover,.ep:focus{border-color:rgba(217,201,143,.6)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media (max-width:620px){.two{grid-template-columns:1fr}h1{font-size:2rem}.moon{width:60px;height:60px}}
 .two .card{margin:0}
-@media (prefers-reduced-motion:reduce){#sky{display:none}}</style>
+@media (prefers-reduced-motion:reduce){#sky{display:none}}
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s8:96px;
+--gold:#d8ca9a;--gold-soft:rgba(216,202,154,.75);--gold-line:rgba(216,202,154,.28);--ink:#e9e5d9;--muted:#aab0cb;--quiet:#8d94b3}
+main.home{max-width:640px;padding:144px var(--s3) var(--s6)}
+.home .brand{font-size:.75rem;letter-spacing:.32em;color:var(--muted);margin:0 0 var(--s2)}
+.home h1{font-size:2.25rem;line-height:1.15;letter-spacing:.005em;margin:0 0 var(--s2)}
+.home .sub{font-size:1.125rem;line-height:1.65;color:#c4c7dc;max-width:30em;margin:0 auto var(--s3)}
+.home .badge{margin:0 auto var(--s5);padding:2px var(--s2);border-color:var(--gold-line);color:var(--gold-soft);font-size:.8125rem}
+.home h2{font-size:1.25rem;line-height:1.35;color:var(--gold);margin:0 0 var(--s2);letter-spacing:.01em}
+.home h2.eyebrow{text-align:center;font-size:.8125rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:0 0 var(--s2)}
+.home p,.home li{font-size:1.0625rem;line-height:1.7;color:#c9cce0;margin:0 0 var(--s2)}
+.home a{color:var(--gold)}
+.home .vid{margin:0 0 var(--s3);border-radius:12px;border-color:rgba(169,179,214,.16);box-shadow:0 24px 64px rgba(0,0,0,.45)}
+.home .watch{margin:0;display:flex;flex-direction:column;align-items:center;gap:var(--s2)}
+.home .btn{margin:0;padding:12px var(--s3);border-radius:999px;background:var(--gold);color:#141a30;font-size:1rem;box-shadow:0 6px 24px rgba(216,202,154,.16)}
+.home .btn:hover,.home .btn:focus-visible{background:#e6dab0}
+.home .tl{text-decoration:none;border-bottom:1px solid var(--gold-line);padding-bottom:2px}
+.home .tl:hover,.home .tl:focus-visible{border-bottom-color:var(--gold)}
+.home a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.home .rule{display:flex;align-items:center;gap:var(--s2);margin:var(--s6) 0}
+.home .rule::before,.home .rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent)}
+.home .rule i{width:10px;height:10px;border-radius:50%;box-shadow:inset -3px -1px 0 0 var(--gold-soft);transform:rotate(-20deg);opacity:.8}
+.home .eps{list-style:none;padding:0;margin:0 0 var(--s3)}
+.home .eps li{margin:0}
+.home .eps a{display:grid;grid-template-columns:96px 1fr;gap:var(--s2);align-items:center;padding:var(--s1) 0;text-decoration:none;color:var(--ink);border-radius:8px}
+.home .eps li+li a{border-top:1px solid rgba(169,179,214,.10)}
+.home .eps img{display:block;width:96px;height:54px;object-fit:cover;border-radius:6px;background:#0b1022;opacity:.92}
+.home .eps a:hover img,.home .eps a:focus-visible img{opacity:1}
+.home .eps .t{font-size:1rem;line-height:1.4}
+.home .eps small{display:block;font-size:.8125rem;color:var(--quiet);margin-top:2px}
+.home .center{text-align:center}
+.home .links{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s1) var(--s3);margin:0 0 var(--s2)}
+.home .small{font-size:.8125rem;line-height:1.6;color:var(--quiet)}
+.home .pair{display:grid;grid-template-columns:1fr;gap:var(--s4)}
+.home .pair h2{font-size:1.125rem}
+.home .pair p{margin:0 0 var(--s1)}
+.home .da-site{margin-top:var(--s6);display:flex;flex-wrap:wrap;justify-content:center;row-gap:0}.home .da-site .c{flex-basis:100%}
+@media (min-width:700px){main.home{padding-top:var(--s8)}.home h1{font-size:2.75rem}.home .sub{font-size:1.1875rem}.home .pair{grid-template-columns:1fr 1fr;gap:var(--s5)}}
+</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://dreamingages.com/#org", "name": "Dreaming Ages History", "alternateName": "Dreaming Ages", "url": "https://dreamingages.com/", "email": "hello@dreamingages.com", "logo": "https://dreamingages.com/sleep-guide/og-image.png", "sameAs": ["https://www.youtube.com/@DreamingAgesHistory", "https://www.youtube.com/channel/UCRoBQ_AuqMw7tudZanhbpEQ", "https://music.youtube.com/playlist?list=PLDM7cZSRUIeE"]}, {"@type": "WebSite", "@id": "https://dreamingages.com/#website", "name": "Dreaming Ages", "url": "https://dreamingages.com/", "inLanguage": "en", "publisher": {"@id": "https://dreamingages.com/#org"}}]}</script>
-<style id="da-site-css">.da-site{position:relative;z-index:3;clear:both;max-width:680px;margin:30px auto 6px;padding:16px 8px 0;border-top:1px solid rgba(232,220,180,.16);text-align:center;font-size:13px;line-height:2.1;color:#9DA3B8;font-family:Georgia,"Times New Roman",serif}.da-site a{color:#E3C77A;text-decoration:none;margin:0 7px;white-space:nowrap}.da-site a:hover,.da-site a:focus{text-decoration:underline}.da-site .c{display:block;margin-top:2px;color:#9DA3B8}</style><style id="da-topnav-css">.da-topnav{position:relative;z-index:20;box-sizing:border-box;max-width:760px;margin:0 auto;padding:10px 16px 2px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 14px;font:13px/1.6 Georgia,"Times New Roman",serif;text-align:left}.da-topnav.abs{position:absolute;top:0;left:0;right:0}.da-topnav a{color:#9DA3B8;text-decoration:none;white-space:nowrap;border-radius:3px}.da-topnav .wm{letter-spacing:.14em;text-transform:uppercase;font-size:11.5px;color:#B9AE8C}.da-topnav .l{display:flex;gap:16px}.da-topnav a:hover{color:#E3C77A}.da-topnav a[aria-current]{color:#E8E4D8;text-decoration:underline;text-decoration-color:rgba(227,199,122,.6);text-underline-offset:4px}.da-topnav a:focus-visible{outline:2px solid #E3C77A;outline-offset:3px}</style></head>
+<style id="da-site-css">.da-site{position:relative;z-index:3;clear:both;max-width:680px;margin:30px auto 6px;padding:16px 8px 0;border-top:1px solid rgba(232,220,180,.16);text-align:center;font-size:13px;line-height:2.1;color:#9DA3B8;font-family:Georgia,"Times New Roman",serif}.da-site a{color:#E3C77A;text-decoration:none;margin:0 7px;white-space:nowrap}.da-site a:hover,.da-site a:focus{text-decoration:underline}.da-site .c{display:block;margin-top:2px;color:#9DA3B8}.da-site{display:flex;flex-wrap:wrap;justify-content:center}.da-site .c{flex-basis:100%}</style><style id="da-topnav-css">.da-topnav{position:relative;z-index:20;box-sizing:border-box;max-width:760px;margin:0 auto;padding:10px 16px 2px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 14px;font:13px/1.6 Georgia,"Times New Roman",serif;text-align:left}.da-topnav.abs{position:absolute;top:0;left:0;right:0}.da-topnav a{color:#9DA3B8;text-decoration:none;white-space:nowrap;border-radius:3px}.da-topnav .wm{letter-spacing:.14em;text-transform:uppercase;font-size:11.5px;color:#B9AE8C}.da-topnav .l{display:flex;gap:16px}.da-topnav a:hover{color:#E3C77A}.da-topnav a[aria-current]{color:#E8E4D8;text-decoration:underline;text-decoration-color:rgba(227,199,122,.6);text-underline-offset:4px}.da-topnav a:focus-visible{outline:2px solid #E3C77A;outline-offset:3px}</style></head>
 <body><nav class="da-topnav" aria-label="Main"><a class="wm" href="/" aria-current="page">Dreaming Ages</a><span class="l"><a href="/episodes/">Episodes</a><a href="/companions/">Companions</a></span></nav><canvas id="sky" aria-hidden="true"></canvas><div class="moon" aria-hidden="true"></div>
-<main class="wide">
+<main class="home">
+<header class="center">
 <div class="brand">Dreaming Ages History</div>
 <h1>Calm history for sleep</h1>
 <p class="sub">Slow, gentle journeys through the past, about an hour each, to help you unwind and drift off. No ad breaks, nothing loud, nothing to wake you.</p>
 <p class="badge">🌙 Sleep Story · No Ad Breaks</p>
-<h2 style="text-align:center">Tonight's newest episode</h2>
+</header>
+<section aria-labelledby="h-new">
+<h2 class="eyebrow" id="h-new">Tonight's newest episode</h2>
 <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/2_El8CXvGPQ?list=PLOHsZ3iVZVdw&amp;rel=0" title="The Ancient Origins of Halloween: Samhain | History for Sleep" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-<p class="watch"><a class="btn" href="https://www.youtube.com/watch?v=2_El8CXvGPQ&amp;list=PLOHsZ3iVZVdw">Play the whole series on YouTube</a> <a class="btn ghost" href="https://music.youtube.com/playlist?list=PLDM7cZSRUIeE">Listen on YouTube Music</a></p>
-<h2>Latest episodes</h2>
-<div class="grid"><a class="ep" href="/episodes/samhain/"><img src="https://i.ytimg.com/vi/2_El8CXvGPQ/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><span>The Ancient Origins of Halloween: Samhain<small>54 min · episode page</small></span></a><a class="ep" href="/episodes/vikings/"><img src="https://i.ytimg.com/vi/8GVZ6SVsAnE/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><span>The Vikings: Longships, Fjords &amp; Northern Seas<small>1 hr 6 min · episode page</small></span></a><a class="ep" href="/episodes/ancient-greece/"><img src="https://i.ytimg.com/vi/WoPYw0nuvA0/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><span>Ancient Greece: 2,000 Years of Gods, Wars &amp; Empires<small>1 hr 6 min · episode page</small></span></a><a class="ep" href="/episodes/feudal-japan/"><img src="https://i.ytimg.com/vi/XAQAb2puQ8Y/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><span>Feudal Japan: Samurai, Shoguns &amp; 1,000 Years of Change<small>1 hr 5 min · episode page</small></span></a><a class="ep" href="/episodes/egypt/"><img src="https://i.ytimg.com/vi/XgBRHvoxty0/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><span>Ancient Egypt for Sleep | What a Night on the Nile Was Like<small>1 hr 5 min · episode page</small></span></a><a class="ep" href="/episodes/silk-road/"><img src="https://i.ytimg.com/vi/Zt3LRM81g6s/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><span>Silk Road Sleep Story: Fall Asleep to History Across Ancient Asia<small>1 hr 5 min · episode page</small></span></a></div>
-<p class="small" style="text-align:center"><a href="/episodes/">All episodes, with summaries and chapters →</a></p>
-<div class="card" style="text-align:center"><h2>A free bedtime companion for every episode</h2>
+<p class="watch"><a class="btn" href="https://www.youtube.com/watch?v=2_El8CXvGPQ&amp;list=PLOHsZ3iVZVdw">Play the whole series on YouTube</a> <a class="tl" href="https://music.youtube.com/playlist?list=PLDM7cZSRUIeE">Listen on YouTube Music</a></p>
+</section>
+<div class="rule" aria-hidden="true"><i></i></div>
+<section aria-labelledby="h-latest">
+<h2 id="h-latest">Latest episodes</h2>
+<ul class="eps"><li><a href="/episodes/vikings/"><img src="https://i.ytimg.com/vi/8GVZ6SVsAnE/mqdefault.jpg" alt="" loading="lazy" width="96" height="54"><span class="t">The Vikings: Longships, Fjords &amp; Northern Seas<small>1 hr 6 min</small></span></a></li><li><a href="/episodes/ancient-greece/"><img src="https://i.ytimg.com/vi/WoPYw0nuvA0/mqdefault.jpg" alt="" loading="lazy" width="96" height="54"><span class="t">Ancient Greece: 2,000 Years of Gods, Wars &amp; Empires<small>1 hr 6 min</small></span></a></li><li><a href="/episodes/feudal-japan/"><img src="https://i.ytimg.com/vi/XAQAb2puQ8Y/mqdefault.jpg" alt="" loading="lazy" width="96" height="54"><span class="t">Feudal Japan: Samurai, Shoguns &amp; 1,000 Years of Change<small>1 hr 5 min</small></span></a></li></ul>
+<p class="small"><a class="tl" href="/episodes/">All episodes, with summaries and chapters →</a></p>
+</section>
+<div class="rule" aria-hidden="true"><i></i></div>
+<section class="center" aria-labelledby="h-comp"><h2 id="h-comp">A free bedtime companion for every episode</h2>
 <p>Printable companions with maps, timelines, and the people and places behind each story. Keep one by the lamp, or skim it once and let the episode do the rest.</p>
-<p><a class="btn" href="/sleep/?ref=home">Get the free companions</a> <a class="btn ghost" href="/companions/">Try a free sample</a></p>
-<p class="small">Every episode, companion and email is free, with no paywall or paid plan.</p></div>
-<div class="two">
-<div class="card"><h2>A calmer night</h2><p>Ten small, evidence-based steps from morning to moonrise, with sources and where to find more help.</p><p><a href="/sleep-guide/">Read the sleep guide →</a></p></div>
-<div class="card"><h2>What kind of sleeper are you?</h2><p>Eight quick taps, under two minutes: a sleep style, three calm steps to try, and a story for tonight.</p><p><a href="/sleep-quiz/">Take the sleep quiz →</a></p></div>
+<p class="links"><a class="tl" href="/sleep/?ref=home">Get the free companions</a> <a class="tl" href="/companions/">Try a free sample</a></p>
+<p class="small">Every episode, companion and email is free, with no paywall or paid plan.</p></section>
+<div class="rule" aria-hidden="true"><i></i></div>
+<div class="pair">
+<section><h2>A calmer night</h2><p>Ten small, evidence-based steps from morning to moonrise, with sources and where to find more help.</p><p><a class="tl" href="/sleep-guide/">Read the sleep guide →</a></p></section>
+<section><h2>What kind of sleeper are you?</h2><p>Eight quick taps, under two minutes: a sleep style, three calm steps to try, and a story for tonight.</p><p><a class="tl" href="/sleep-quiz/">Take the sleep quiz →</a></p></section>
 </div>
-<h2>What is Dreaming Ages?</h2>
+<div class="rule" aria-hidden="true"><i></i></div>
+<section aria-labelledby="h-what">
+<h2 id="h-what">What is Dreaming Ages?</h2>
 <p>Dreaming Ages is calm history for sleep. Each episode is a long, slow journey through one place and time, from the Nile and the Silk Road to Viking fjords, feudal Japan and the old Gaelic festival of Samhain, narrated softly with quiet music and slow images. There are no cliff-hangers, no loud sounds and no mid-video ads, so you can press play, dim the screen and let it run.</p>
 <p>The history is real. Every script is researched from published books, fact-checked, and honest about where historians disagree. You can read <a href="/our-approach/">how we make the episodes</a>, find books for each episode in our <a href="/reading/">reading lists</a>, or <a href="https://www.youtube.com/@DreamingAgesHistory">subscribe on YouTube</a> for three new journeys a week.</p>
 <p class="small">Narration on the channel is AI-generated text-to-speech. Not medical advice: if poor sleep lasts or affects your days, please talk to a doctor. Questions: <a href="mailto:hello@dreamingages.com">hello@dreamingages.com</a></p>
+</section>
 <nav class="da-site" aria-label="Site"><a href="/">Home</a><a href="/episodes/">Episodes</a><a href="/sleep/">Free companions</a><a href="/companions/">Companion samples</a><a href="/sleep-guide/">Sleep guide</a><a href="/sleep-quiz/">Sleep quiz</a><a href="/our-approach/">Our approach</a><a href="/reading/">Reading lists</a><a href="https://www.youtube.com/@DreamingAgesHistory">YouTube</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><span class="c">Every episode, companion and email is free, with no paywall or paid plan · <a href="mailto:hello@dreamingages.com" style="margin:0">hello@dreamingages.com</a></span></nav>
 </main><script>const c=document.getElementById('sky'),x=c.getContext('2d');let s=[];
 function init(){c.width=innerWidth;c.height=innerHeight;s=[];for(let i=0;i<Math.floor(c.width*c.height/3500);i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.3+.2,p:Math.random()*6.28,v:.003+Math.random()*.008})}
