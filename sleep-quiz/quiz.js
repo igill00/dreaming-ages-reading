@@ -1,7 +1,7 @@
 /* Dreaming Ages wind-down check. Plain JS, no cookies, no storage, no network calls. */
 (function(){
   var KIT = 'https://kit-dreaming-ages.kit.com/d09dc2b5c3';
-  var R = window.DA_REF||{}; function sup(keys){return (keys||[]).map(function(k){return R[k]?'<sup><a href="#src-'+R[k]+'">'+R[k]+'</a></sup>':'';}).join('');}
+  var R = window.DA_REF||{}, SB='../sleep-guide/', GB='../sleep-guide/', ST={"r": [6, 8, 10], "s": [1, 2, 5], "l": [7, 3, 10], "g": [1, 2, 5]}; function sup(keys){return (keys||[]).map(function(k){return R[k]?'<sup><a href="'+SB+'#src-'+R[k]+'">'+R[k]+'</a></sup>':'';}).join('');}
   var YT = function(id){return 'https://www.youtube.com/watch?v='+id+'&amp;list=PLOHsZ3iVZVdw';};
   // r = racing mind, s = shifting schedule, l = light sleeper, h = harmony points (0-3, higher is calmer)
   var Q = [
@@ -110,13 +110,13 @@
       '<div class="kick">Your sleep style</div><h2>'+esc(p.name)+'</h2><p class="blurb">'+esc(p.blurb)+'</p>'+
       '<div class="meter"><div class="lbl"><span>Evening calm</span><span>'+band+'</span></div><div class="track"><div class="fill" data-w="'+score+'"></div></div></div>'+
       '<div class="sub-h">Three things to try</div><ol class="tips">';
-    p.tips.forEach(function(tp,n){h+='<li><span class="n">'+(n+1)+'</span><div><b>'+esc(tp[0])+'</b><span>'+esc(tp[1])+sup(tp[2])+'</span></div></li>';});
+    p.tips.forEach(function(tp,n){var sn=ST[best][n]; h+='<li><span class="n">'+(n+1)+'</span><div><b>'+esc(tp[0])+'</b><span>'+esc(tp[1])+sup(tp[2])+'</span><a class="go" href="'+GB+'#step-'+sn+'">Step '+sn+' in the guide \u2192</a></div></li>';});
     h+='</ol><div class="sub-h">Stories for tonight</div><div class="eps">';
     p.eps.forEach(function(e){h+='<a class="ep" href="'+YT(e[0])+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 16 16"><path d="M3 1.5v13l11-6.5z"/></svg></span><span><b>'+esc(e[1])+'</b><small>'+esc(e[2])+'</small></span></a>';});
     h+='</div>';
     if(t.flag) h+='<p class="care">Feeling very sleepy in the day, even after a full night, is worth mentioning to a doctor, especially if someone has noticed loud snoring or pauses in your breathing.'+sup(['nhsosa'])+'</p>';
     h+='<div class="actions"><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Email me my full plan</a><button class="btn ghost" type="button" data-again>Take it again</button></div>'+
-      '<p class="fine">This is a friendly self-check, not a medical test or diagnosis, and it isn\u2019t medical advice. Your answers stay on this page and aren\u2019t saved or sent anywhere. If poor sleep has lasted more than about three months, or is affecting your days, please talk to a doctor.'+sup(['nhsins'])+' Loud snoring, gasping or choking at night can be a sign of sleep apnoea, so it\u2019s worth getting checked.'+sup(['nhsosa'])+' <a href="#help">More help</a>.</p></div>';
+      '<p class="fine">This is a friendly self-check, not a medical test or diagnosis, and it isn\u2019t medical advice. Your answers stay on this page and aren\u2019t saved or sent anywhere. If poor sleep has lasted more than about three months, or is affecting your days, please talk to a doctor.'+sup(['nhsins'])+' Loud snoring, gasping or choking at night can be a sign of sleep apnoea, so it\u2019s worth getting checked.'+sup(['nhsosa'])+' <a href="../sleep-guide/#help">More help</a>.</p></div>';
     i=Q.length; swap(h,'h2');
   }
   root.addEventListener('click',function(e){

@@ -112,3 +112,14 @@ sup a:hover{text-decoration:underline}
 .shot header.hero,.shot #guide,.shot #help,.shot footer{display:none}.shot #check{padding-top:16px}
 .quiz [tabindex="-1"]:focus{outline:none}.qtop.pre{visibility:hidden}
 sup+sup:before{content:","}
+
+/* fix 16 Oct: anchor landing */
+section[id],.step,.srcs li{scroll-margin-top:18px}
+.step:target .card{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 24px rgba(227,199,125,.25);transition:box-shadow .4s,border-color .4s}
+.tips .go{display:block;margin-top:6px;font-size:.85rem;font-weight:700;color:var(--gold);text-decoration:none}
+.tips .go:hover{text-decoration:underline}
+.backlinks{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:14px 0 0;font-size:.9rem}
+.backlinks a{text-decoration:none}
+.cta{margin:26px 0 0;padding:20px 18px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(24,34,76,.78),rgba(14,20,48,.82));text-align:center}
+.cta h3{margin:.1em 0 .3em;font-size:1.15rem}
+.cta p{color:var(--soft);margin:0 0 14px}
