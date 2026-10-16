@@ -1,4 +1,4 @@
-/* Dreaming Ages wind-down check. Plain JS, no cookies, no storage, no network calls. */
+/* Dreaming Ages wind-down check. Plain JS, no cookies, no storage, no network calls. Email/copy my results uses mailto + clipboard only. */
 (function(){
   var KIT = 'https://kit-dreaming-ages.kit.com/d09dc2b5c3', OF={"r": "Give your racing mind somewhere calm to go", "s": "A steady Monday note for a steadier week", "l": "Quiet stories for light sleepers, once a week", "g": "Keep your good nights coming"};
   var R = window.DA_REF||{}, SB='../sleep-guide/', GB='../sleep-guide/', ST={"r": [6, 8, 10], "s": [1, 2, 5], "l": [7, 3, 10], "g": [1, 2, 5]}; function sup(keys){return (keys||[]).map(function(k){return R[k]?'<sup><a href="'+SB+'#src-'+R[k]+'">'+R[k]+'</a></sup>':'';}).join('');}
@@ -75,7 +75,7 @@
     g:'<circle cx="75" cy="75" r="62" fill="#141d47" stroke="#e3c77d" stroke-opacity=".5"/><circle cx="75" cy="64" r="26" fill="#f1dc9c"/><circle cx="66" cy="58" r="4" fill="#e3c77d" opacity=".5"/><circle cx="83" cy="72" r="3" fill="#e3c77d" opacity=".45"/><path d="M28 106c14-10 26-10 40 0s26 10 40 0 14-6 14-6" fill="none" stroke="#c6cbe2" stroke-width="2.4" stroke-linecap="round" opacity=".7"/><path d="M36 118c12-8 22-8 34 0s22 8 34 0" fill="none" stroke="#c6cbe2" stroke-width="2" stroke-linecap="round" opacity=".45"/>'
   };
   var root=document.getElementById('quiz'); if(!root) return;
-  var ans=[], i=-1, bar=null, io=null, closed=false;
+  var ans=[], i=-1, bar=null, io=null, closed=false, cur=null;
   function stickyOff(){ if(bar) bar.classList.remove('on'); if(io){io.disconnect();io=null;} }
   function stickyOn(){ if(closed) return; if(!bar){ bar=document.createElement('div'); bar.className='sticky-offer'; bar.setAttribute('role','region'); bar.setAttribute('aria-label','Free bedtime companion');
       bar.innerHTML='<span><b>Free Bedtime Companion</b> + one quiet email a week</span><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Get it</a><button class="x" type="button" aria-label="Close">\u00d7</button>';
@@ -83,6 +83,30 @@
     var card=document.getElementById('offer'); if(!card) return;
     io={f:function(){ var r=card.getBoundingClientRect(); bar.classList.toggle('on', r.bottom<0); }, disconnect:function(){ removeEventListener('scroll',io.f); }};
     addEventListener('scroll',io.f,{passive:true}); io.f(); }
+  // Email/copy my results: builds plain text locally. Nothing is sent to us; mailto: only opens the visitor's own email app.
+  var SITE='https://dreamingages.com', MAXBODY=1800, MAXURL=2000;
+  function plain(s){return String(s).replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/\u2026/g,'...').replace(/[\u2013\u2014]/g,'-');}
+  function mailText(best,flag,mode){
+    var p=P[best], L=[];
+    L.push('Your sleep style: '+p.name,'',p.blurb,'','Three things to try:');
+    p.tips.forEach(function(tp,n){ L.push((n+1)+'. '+tp[0]+(mode<2?': '+tp[1]:'')); });
+    L.push('','Step-by-step guide: '+SITE+'/sleep-guide/');
+    if(mode<1){ var e=p.eps[0]; L.push('A story for tonight: '+e[1]+' '+YT(e[0]).replace('&amp;','&')); }
+    if(flag) L.push('','Feeling very sleepy in the day, even after a full night, is worth mentioning to a doctor.');
+    L.push('','This is a light self-check, not medical advice.','More help: '+SITE+'/sleep-guide/#help','','Take the check again: '+SITE+'/sleep-quiz/','','Dreaming Ages - slow, calm history to fall asleep to');
+    return plain(L.join('\n'));
+  }
+  var SUBJ='My Dreaming Ages sleep check results';
+  function mailto(best,flag){
+    for(var mode=0;mode<3;mode++){ var b=mailText(best,flag,mode), u='mailto:?subject='+encodeURIComponent(SUBJ)+'&body='+encodeURIComponent(b.replace(/\n/g,'\r\n'));
+      if((b.length<=MAXBODY && u.length<=MAXURL) || mode===2) return {url:u,body:b,mode:mode}; }
+  }
+  window.DA_MAIL={text:mailText,mailto:mailto,subject:SUBJ,P:P};
+  function copyText(t,done){
+    function legacy(){ var a=document.createElement('textarea'); a.value=t; a.setAttribute('readonly',''); a.style.cssText='position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(a); a.select(); a.setSelectionRange(0,t.length); var ok=false; try{ok=document.execCommand('copy');}catch(e){} document.body.removeChild(a); done(ok); }
+    if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(t).then(function(){done(true);},legacy); } else legacy();
+  }
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function top(){
     var pct = i<0?0:(i>=Q.length?100:Math.round((i+1)/Q.length*100));
@@ -118,17 +142,23 @@
       '<div class="meter"><div class="lbl"><span>Evening calm</span><span>'+band+'</span></div><div class="track"><div class="fill" data-w="'+score+'"></div></div></div>'+
       '<div class="sub-h">Three things to try</div><ol class="tips">';
     p.tips.forEach(function(tp,n){var sn=ST[best][n]; h+='<li><span class="n">'+(n+1)+'</span><div><b>'+esc(tp[0])+'</b><span>'+esc(tp[1])+sup(tp[2])+'</span><a class="go" href="'+GB+'#step-'+sn+'">Step '+sn+' in the guide \u2192</a></div></li>';});
-    h+='</ol><div class="offer" id="offer"><div class="ok">Free bedtime companion</div><h3>'+esc(OF[best])+'</h3><p>Join the Dreaming Ages list for slow, calm history to fall asleep to.</p><ul><li><b>A free Bedtime Companion PDF</b> with each week\u2019s episodes: a map, a timeline and the people you\u2019ll meet</li><li><b>One quiet email on Mondays</b> with that week\u2019s new sleep stories</li><li><b>A small history curiosity</b> to read by lamplight</li></ul><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Send me the free companion \u2192</a><p class="fine">Every episode, companion and email is free, with no paywall or paid plan. One quiet email a week. Unsubscribe with one click. Your quiz answers aren\u2019t sent with your email.</p></div>';
+    h+='</ol>';
+    var mt=mailto(best,t.flag); cur={best:best,flag:t.flag};
+    h+='<div class="keep"><div class="keep-row"><a class="btn ghost sm" href="'+esc(mt.url)+'" data-mail>\u2709\uFE0F Email my results to myself</a><button class="btn ghost sm" type="button" data-copy>\uD83D\uDCCB Copy my results</button></div><p class="keep-note" role="status" aria-live="polite">Opens your own email app, with the To line left blank. Nothing is sent to us.</p></div>';
+    h+='<div class="offer" id="offer"><div class="ok">Free bedtime companion</div><h3>'+esc(OF[best])+'</h3><p>Join the Dreaming Ages list for slow, calm history to fall asleep to.</p><ul><li><b>A free Bedtime Companion PDF</b> with each week\u2019s episodes: a map, a timeline and the people you\u2019ll meet</li><li><b>One quiet email on Mondays</b> with that week\u2019s new sleep stories</li><li><b>A small history curiosity</b> to read by lamplight</li></ul><a class="btn" href="'+KIT+'" target="_blank" rel="noopener">Send me the free companion \u2192</a><p class="fine">Every episode, companion and email is free, with no paywall or paid plan. One quiet email a week. Unsubscribe with one click. Your quiz answers aren\u2019t sent with your email.</p></div>';
     h+='<div class="sub-h">Stories for tonight</div><div class="eps">';
     p.eps.forEach(function(e){h+='<a class="ep" href="'+YT(e[0])+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 16 16"><path d="M3 1.5v13l11-6.5z"/></svg></span><span><b>'+esc(e[1])+'</b><small>'+esc(e[2])+'</small></span></a>';});
     h+='</div>';
     if(t.flag) h+='<p class="care">Feeling very sleepy in the day, even after a full night, is worth mentioning to a doctor, especially if someone has noticed loud snoring or pauses in your breathing.'+sup(['nhsosa'])+'</p>';
     h+='<div class="actions"><button class="btn ghost" type="button" data-again>Take it again</button></div>'+
-      '<p class="fine">This is a friendly self-check, not a medical test or diagnosis, and it isn\u2019t medical advice. Your answers stay on this page and aren\u2019t saved or sent anywhere. If poor sleep has lasted more than about three months, or is affecting your days, please talk to a doctor.'+sup(['nhsins'])+' Loud snoring, gasping or choking at night can be a sign of sleep apnoea, so it\u2019s worth getting checked.'+sup(['nhsosa'])+' <a href="../sleep-guide/#help">More help</a>.</p></div>';
+      '<p class="fine">This is a friendly self-check, not a medical test, and it isn\u2019t medical advice. Your answers stay on this page and aren\u2019t saved or sent anywhere, unless you choose to email or copy them yourself. If poor sleep has lasted more than about three months, or is affecting your days, please talk to a doctor.'+sup(['nhsins'])+' Loud snoring, gasping or choking at night can be a sign of sleep apnoea, so it\u2019s worth getting checked.'+sup(['nhsosa'])+' <a href="../sleep-guide/#help">More help</a>.</p></div>';
     i=Q.length; swap(h,'h2'); setTimeout(stickyOn,900);
   }
   root.addEventListener('click',function(e){
+    var m=e.target.closest('[data-mail]'); if(m && cur){ m.href=mailto(cur.best,cur.flag).url; var n0=root.querySelector('.keep-note'); if(n0) n0.textContent='Opening your email app\u2026 If nothing happens, use \u201cCopy my results\u201d and paste them into an email or note.'; return; }
     var b=e.target.closest('button'); if(!b) return;
+    if(b.hasAttribute('data-copy') && cur){ var note=root.querySelector('.keep-note'), txt='My Dreaming Ages sleep check results\n\n'+mailText(cur.best,cur.flag,0);
+      copyText(txt,function(ok){ b.textContent=ok?'\u2714\uFE0F Copied':'\uD83D\uDCCB Copy my results'; if(note) note.textContent=ok?'Copied. Paste it into an email, a note or a message to yourself.':'Couldn\u2019t copy here. Try the email button instead.'; setTimeout(function(){b.textContent='\uD83D\uDCCB Copy my results';},2500); }); return; }
     if(b.hasAttribute('data-start')){i=0;ans=[];ask();}
     else if(b.hasAttribute('data-again')){intro();}
     else if(b.hasAttribute('data-back')){ if(i>0){i--;ask();} }
